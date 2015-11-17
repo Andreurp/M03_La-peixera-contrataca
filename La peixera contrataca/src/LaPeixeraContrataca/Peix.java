@@ -7,17 +7,17 @@ import acm.graphics.GRectangle;
 
 public class Peix {
 	
-	private boolean mascle;
-	private boolean horizontal;
-	private GImage imatge;
-	private int posicioX;
-	private int posicioY;
-	private int midaFinestraX;
-	private int midaFinestraY;
-	private int direccio;
-	private int velocitat;
-	private boolean esteril;
-	private int contedorEsteril;
+	protected boolean mascle;
+	protected boolean horizontal;
+	protected GImage imatge;
+	protected int posicioX;
+	protected int posicioY;
+	protected int midaFinestraX;
+	protected int midaFinestraY;
+	protected int direccio;
+	protected int velocitat;
+	protected boolean esteril;
+	protected int contedorEsteril;
 	
 	private Random rand = new Random();
 	
@@ -42,6 +42,10 @@ public class Peix {
 		}
 		
 		//Depen de la direcció agafa una imatge o una altre
+		generaImatge();
+	}
+	
+	protected void generaImatge(){
 		String img="";
 		if(mascle==true){
 			if(horizontal==true){
@@ -117,6 +121,27 @@ public class Peix {
 	public boolean getEsteril() {
 		return esteril;
 	}
+	/**
+	 * 
+	 * @param p
+	 * @return 0 no fer res
+	 * 1 mata els dos peixos
+	 * 2 cria peix
+	 */
+	public int xoca(Peix p){
+		int resultat=0;
+		if(this.getPosicio().intersects(p.getPosicio())){
+			if(this.getMascle()==p.getMascle()){
+				resultat=1;
+			}else{
+				if(this.getEsteril()==false && p.getEsteril()==false){
+					resultat=2;
+				}
+			}
+		}
+		return resultat;
+	}
+	
 	public void setEsteril(boolean esteril) {
 		this.esteril = esteril;
 		if(esteril==true){
